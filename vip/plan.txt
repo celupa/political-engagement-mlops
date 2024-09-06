@@ -1,0 +1,13 @@
+# Create an app that automatically runs an mlops pipeline for an XGBoost study
+
+# The app should have the following features:
+    - Experiment tracking and model registry (MLFLOW)
+    - Workflow orchestration (MAGEAI)
+    - Monitoring (EVIDENTLY, GRAFANA...)
+    - CI/CD 
+        - Unit Tests
+        - Integration Tests
+        - Code Formatter (LINTER, BLACK...)
+        - CLI Support (Makefile)
+        - Pre-commit hooks (GIT)
+    - Local & Cloud deployment
