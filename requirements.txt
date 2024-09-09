@@ -1,0 +1,5 @@
+# python==3.10.14
+pandas==1
+pyarrow==1
+scikit-learn==1
+

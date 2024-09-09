@@ -64,5 +64,3 @@ COUNTRY_MAPPING = {
                     862: "Venezuela",
                     909: "Northren Ireland"
                 }
-
-print(COUNTRY_MAPPING)
