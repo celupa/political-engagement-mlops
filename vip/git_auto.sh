@@ -1,4 +1,4 @@
 #! /bin/bash
 git add .
-git commit -m "an vaste update of wonders and dreams!"
+git commit -m "a vaste update of wonders and dreams!"
 git push 
