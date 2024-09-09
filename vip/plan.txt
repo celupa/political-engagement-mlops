@@ -1,3 +1,7 @@
+# TODO:
+    - README
+        - describe lack of pre-processing because data is highly idiosyncratic
+
 # Create an app that automatically runs an mlops pipeline for an XGBoost study
 
 # The app should have the following features:
