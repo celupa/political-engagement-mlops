@@ -1,6 +1,15 @@
 # TODO:
+    - APP:
+        - Implement exit function
+    - REPO: rename to xgbutler-mlops
     - README
-        - describe lack of pre-processing because data is highly idiosyncratic
+        - Intro:
+            - Implement clickable table of contents
+        - Data:
+            - Describe lack of pre-processing because data is highly idiosyncratic
+            - Thus user data should be *pre-processed* before ingestion
+            - Works only with parquet files (web/local)
+            - For the moment only works with *binary target*
 
 # Create an app that automatically runs an mlops pipeline for an XGBoost study
 
