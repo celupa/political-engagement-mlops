@@ -1,5 +1,6 @@
 # python==3.10.14
-pandas==1
-pyarrow==1
-scikit-learn==1
+scikit-learn==1.5.1
+pandas==2.2.2
+pyarrow==16.1.0
+
 
