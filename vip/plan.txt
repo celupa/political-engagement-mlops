@@ -1,6 +1,9 @@
 # TODO:
     - APP:
-        - Implement exit function
+        - Implement user-config check
+        - Implement exit function if user config incomplete
+        - Implement unit and integration tests
+        - CLI needs to get MLFLOW_DB_PATH from config_me.py
     - REPO: rename to xgbutler-mlops
     - README
         - Intro:
@@ -12,6 +15,9 @@
             - For the moment only works with *binary target*
 
 # Create an app that automatically runs an mlops pipeline for an XGBoost study
+# UPDATE > not that of a good idea... app is too restrictive to be usable 
+# EX: param optimization, only xgboost, binary, classfication...
+# 
 
 # The app should have the following features:
     - Experiment tracking and model registry (MLFLOW)

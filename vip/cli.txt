@@ -1,1 +1,2 @@
 mlflow ui --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root mlflow
+mlflow server --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root mlflow
