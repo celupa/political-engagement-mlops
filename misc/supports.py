@@ -26,18 +26,16 @@ def objective(
         ) -> dict:
     """Set-up the mlflow/hyperopt optimization process."""
 
-    metrics = []
-
     with mlflow.start_run():
         mlflow.log_params(search_space)
         booster = xgb.train(
             params=search_space,
             dtrain=xtrain,
             num_boost_round=num_boost_round,
-            evals=[(xtest, "test_set")],
+            evals=[(xtest, "test")],
             early_stopping_rounds=50
             )
-
+        
         # get predictions
         ytrain_pred = booster.predict(xtrain)
         yval_pred = booster.predict(xtest)
@@ -50,17 +48,18 @@ def objective(
         # get rmse
         train_rmse = root_mean_squared_error(ytrain, ytrain_pred)
         test_rmse = root_mean_squared_error(ytest, yval_pred)
-
-        # store metrics
-        metrics.extend([
-            train_auc, test_auc, 
-            train_log_loss, test_log_loss, 
-            train_rmse, test_rmse
-            ])
         
-        # log metrics
-        for metric in metrics:
-            mlflow.log_metric(get_objname(metric), metric)
+        metrics = {
+            "train_auc": train_auc,
+            "test_auc": test_auc,
+            "train_log_loss": train_log_loss,
+            "test_log_loss": test_log_loss,
+            "train_rmse": train_rmse,
+            "test_rmse": test_rmse
+            }
+        
+        for name, metric in metrics.items():
+            mlflow.log_metric(name, metric)
 
         return {"loss": test_log_loss, "status": STATUS_OK}
         
