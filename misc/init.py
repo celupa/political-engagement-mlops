@@ -1,19 +1,25 @@
 # from config import config_me, default_config
 
 
-def init_config(mode="test"):
+def init_config(mode: str="test", skip_run: bool=True) -> dict:
     """Initialize configuration. If user doesn't provide config, use default settings."""
 
     CONFIG = {
         "test": {
+            "mode": mode,
             "mlflow_evals_nbr": 2,
-            "booster_rounds": 10
+            "booster_rounds": 10,
+            "skip_run": skip_run
         },
         "prod": {
+            "mode": mode,
             "mlflow_evals_nbr": 100,
-            "booster_rounds": 1000
+            "booster_rounds": 1000,
+            "skip_run": skip_run
         }
     }
+
+    return CONFIG[mode]
     # user_config_completion = 0
     # missed_settings = []
 
@@ -32,8 +38,6 @@ def init_config(mode="test"):
     #     return default_config.DEFAULT_CONFIG
     
     # return config_me.USER_CONFIG
-
-    return CONFIG[mode]
 
 
 if __name__ == "__main__":

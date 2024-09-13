@@ -1,9 +1,6 @@
 # TODO:
     - APP:
-        - Implement user-config check
-        - Implement exit function if user config incomplete
-        - Implement unit and integration tests
-        - CLI needs to get MLFLOW_DB_PATH from config_me.py
+        - Work our LOCAL-AWS paths
     - REPO: rename to xgbutler-mlops
     - README
         - Intro:
