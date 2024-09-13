@@ -49,6 +49,7 @@ def objective(
         train_rmse = root_mean_squared_error(ytrain, ytrain_pred)
         test_rmse = root_mean_squared_error(ytest, yval_pred)
         
+        # store metrics
         metrics = {
             "train_auc": train_auc,
             "test_auc": test_auc,
@@ -58,6 +59,7 @@ def objective(
             "test_rmse": test_rmse
             }
         
+        # log metrics to mlflow
         for name, metric in metrics.items():
             mlflow.log_metric(name, metric)
 
