@@ -1,5 +1,7 @@
 # personal stuff
 mlruns/
+.ssh_tunnel
+metadata.yaml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
