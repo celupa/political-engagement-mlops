@@ -2,6 +2,8 @@
 mlruns/
 .ssh_tunnel
 metadata.yaml
+~/
+mageai/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -12,6 +12,10 @@
             - For the moment only works with *binary target*
         - PS:
             - Describe how I lack inclination towards MLOPS if purpose is lacking
+    - Unit Tests:
+        - app.ipynb
+        - train.ipynb
+        - mageai/poleng/utils/supports.py (?)
 
 # Create an app that automatically runs an mlops pipeline for an XGBoost study
 # UPDATE > not that of a good idea... app is too restrictive to be usable 
