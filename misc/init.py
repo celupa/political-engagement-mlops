@@ -1,7 +1,7 @@
 # from config import config_me, default_config
 
 
-def init_config(mode: str="test", skip_run: bool=True) -> dict:
+def init_config(mode: str="test", skip_optimization: bool=True) -> dict:
     """Initialize configuration. If user doesn't provide config, use default settings."""
 
     CONFIG = {
@@ -9,13 +9,13 @@ def init_config(mode: str="test", skip_run: bool=True) -> dict:
             "mode": mode,
             "mlflow_evals_nbr": 2,
             "booster_rounds": 10,
-            "skip_run": skip_run
+            "skip_optimization": skip_optimization
         },
         "prod": {
             "mode": mode,
             "mlflow_evals_nbr": 100,
             "booster_rounds": 1000,
-            "skip_run": skip_run
+            "skip_optimization": skip_optimization
         }
     }
 

@@ -2,12 +2,15 @@ import pandas as pd
 
 import xgboost as xgb
 from sklearn.metrics import roc_auc_score, log_loss, root_mean_squared_error
+from sklearn.feature_extraction import DictVectorizer
 
 from hyperopt import STATUS_OK
 
 import mlflow
 
-from typing import Any
+from datetime import datetime
+import pickle
+from typing import Any, Tuple
 
 
 def get_objname(obj: Any) -> str:
@@ -22,11 +25,14 @@ def objective(
         xtest: xgb.DMatrix,
         ytrain: pd.Series,
         ytest: pd.Series,
-        num_boost_round: int
+        num_boost_round: int,
+        tags: dict={},
+        save_artifacts: Tuple[bool, DictVectorizer]=(False, None)
         ) -> dict:
     """Set-up the mlflow/hyperopt optimization process."""
 
     with mlflow.start_run():
+        mlflow.set_tags(tags)
         mlflow.log_params(search_space)
         booster = xgb.train(
             params=search_space,
@@ -36,7 +42,7 @@ def objective(
             early_stopping_rounds=50
             )
         
-        # get predictions
+        # get metrics
         ytrain_pred = booster.predict(xtrain)
         yval_pred = booster.predict(xtest)
         # get auc
@@ -62,6 +68,22 @@ def objective(
         # log metrics to mlflow
         for name, metric in metrics.items():
             mlflow.log_metric(name, metric)
+
+        if save_artifacts[0]:
+            # tag data
+            # yymmddhhmmss
+            model_creation_time = datetime.now().strftime("%y%m%d%H%M%S")
+            model_name = f"poleng_xgb_{model_creation_time}"
+            preprocessor_name = f"preprocessor_xgb_{model_creation_time}"
+            dv = save_artifacts[1]
+
+             # log artifacts  
+            with open(f"./mlflow/{preprocessor_name}.bin", "wb") as fout:
+                    pickle.dump(dv, fout)
+            booster.save_model(f"./mlflow/{model_name}.xgb")
+            mlflow.log_artifact(f"./mlflow/{preprocessor_name}.bin", artifact_path=preprocessor_name)
+            mlflow.log_artifact(f"./mlflow/{model_name}.xgb", artifact_path=model_name)
+            mlflow.set_tag("model", model_name)
 
         return {"loss": test_log_loss, "status": STATUS_OK}
         
