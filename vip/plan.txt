@@ -1,5 +1,6 @@
 # TODO:
     - APP:
+        - Write user automation scripts (that performs the manual labor for the user)
         - Work our LOCAL-AWS paths
     - REPO: rename to xgbutler-mlops
     - README
