@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 
 import xgboost as xgb
@@ -19,6 +21,13 @@ def get_objname(obj: Any) -> str:
     obj_name =[v for v in globals() if globals()[v] is obj][0]    
     return obj_name
 
+def clear_outdated_artifacts(artifacts_path: str) -> None:
+    for file in os.listdir(artifacts_path):
+        # isolate models and preprocessors
+        if not file.endswith("db"):
+            file_path = f"{artifacts_path}/{file}"
+            os.remove(file_path)
+
 def objective(
         search_space: dict,
         xtrain: xgb.DMatrix,
@@ -27,9 +36,14 @@ def objective(
         ytest: pd.Series,
         num_boost_round: int,
         tags: dict={},
-        save_artifacts: Tuple[bool, DictVectorizer]=(False, None)
+        save_artifacts: Tuple[bool, str, DictVectorizer]=(False, "", None)
         ) -> dict:
-    """Set-up the mlflow/hyperopt optimization process."""
+    """
+    Set-up the mlflow/hyperopt optimization process.
+    
+    params:
+        save_artifacts: bool, artifacts_path, DictVectorizer
+    """
 
     with mlflow.start_run():
         mlflow.set_tags(tags)
@@ -75,14 +89,17 @@ def objective(
             model_creation_time = datetime.now().strftime("%y%m%d%H%M%S")
             model_name = f"poleng_xgb_{model_creation_time}"
             preprocessor_name = f"preprocessor_xgb_{model_creation_time}"
-            dv = save_artifacts[1]
+            artifact_paths = save_artifacts[1]
+            dv = save_artifacts[2]
+            
+            clear_outdated_artifacts(artifact_paths)
 
-             # log artifacts  
-            with open(f"./mlflow/{preprocessor_name}.bin", "wb") as fout:
+            # log artifacts  
+            with open(f"{artifact_paths}/{preprocessor_name}.bin", "wb") as fout:
                     pickle.dump(dv, fout)
-            booster.save_model(f"./mlflow/{model_name}.xgb")
-            mlflow.log_artifact(f"./mlflow/{preprocessor_name}.bin", artifact_path=preprocessor_name)
-            mlflow.log_artifact(f"./mlflow/{model_name}.xgb", artifact_path=model_name)
+            booster.save_model(f"{artifact_paths}/{model_name}.xgb")
+            mlflow.log_artifact(f"{artifact_paths}/{preprocessor_name}.bin", artifact_path=preprocessor_name)
+            mlflow.log_artifact(f"{artifact_paths}/{model_name}.xgb", artifact_path=model_name)
             mlflow.set_tag("model", model_name)
 
         return {"loss": test_log_loss, "status": STATUS_OK}

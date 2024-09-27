@@ -9,6 +9,7 @@ mageai/
 __pycache__/
 *.py[cod]
 *$py.class
+model.xgb
 
 # C extensions
 *.so
