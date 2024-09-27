@@ -1,5 +1,6 @@
 # personal stuff
 mlruns/
+mlflow/mlruns/
 .ssh_tunnel
 metadata.yaml
 ~/

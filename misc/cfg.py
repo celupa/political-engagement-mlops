@@ -1,4 +1,4 @@
-# from config import config_me, default_config
+import os 
 
 
 def init_config(mode: str="test", skip_optimization: bool=True) -> dict:
@@ -9,13 +9,15 @@ def init_config(mode: str="test", skip_optimization: bool=True) -> dict:
             "mode": mode,
             "mlflow_evals_nbr": 2,
             "booster_rounds": 10,
-            "skip_optimization": skip_optimization
+            "skip_optimization": skip_optimization,
+            "mlflow_artifacts_path": f"{os.getcwd()}/mlflow/mlruns/poleng"
         },
         "prod": {
             "mode": mode,
             "mlflow_evals_nbr": 100,
             "booster_rounds": 1000,
-            "skip_optimization": skip_optimization
+            "skip_optimization": skip_optimization,
+            "mlflow_artifacts_path": f"{os.getcwd()}/mlflow/mlruns/poleng"
         }
     }
 

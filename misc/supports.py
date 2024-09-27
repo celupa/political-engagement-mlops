@@ -13,6 +13,7 @@ import mlflow
 from datetime import datetime
 import pickle
 from typing import Any, Tuple
+import sqlite3
 
 
 def get_objname(obj: Any) -> str:
@@ -21,10 +22,29 @@ def get_objname(obj: Any) -> str:
     obj_name =[v for v in globals() if globals()[v] is obj][0]    
     return obj_name
 
+def set_mlflow_artifact_location(
+        db_path: str, 
+        experiment_name: str,
+        artifact_location: str) -> None:
+    
+    # connect to db
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    # set artifact location
+    query = """UPDATE experiments
+            SET artifact_location = ?
+            WHERE name = ?"""
+    
+    cursor.execute(query, (artifact_location, experiment_name))
+    # close connection
+    conn.commit()
+    conn.close()
+
 def clear_outdated_artifacts(artifacts_path: str) -> None:
     for file in os.listdir(artifacts_path):
         # isolate models and preprocessors
-        if not file.endswith("db"):
+        if file.endswith("xgb") or file.endswith("bin"):
             file_path = f"{artifacts_path}/{file}"
             os.remove(file_path)
 
@@ -98,8 +118,8 @@ def objective(
             with open(f"{artifact_paths}/{preprocessor_name}.bin", "wb") as fout:
                     pickle.dump(dv, fout)
             booster.save_model(f"{artifact_paths}/{model_name}.xgb")
-            mlflow.log_artifact(f"{artifact_paths}/{preprocessor_name}.bin", artifact_path=preprocessor_name)
-            mlflow.log_artifact(f"{artifact_paths}/{model_name}.xgb", artifact_path=model_name)
+            mlflow.log_artifact(f"{artifact_paths}/{preprocessor_name}.bin")
+            mlflow.log_artifact(f"{artifact_paths}/{model_name}.xgb")
             mlflow.set_tag("model", model_name)
 
         return {"loss": test_log_loss, "status": STATUS_OK}
