@@ -28,5 +28,7 @@ def predict_prod_batches(
                 NEW_BATCHES_PATH,
                 PREDS_PATH
                 )
-            
-predict_prod_batches()
+
+
+if __name__ == "__main__":
+    predict_prod_batches()
