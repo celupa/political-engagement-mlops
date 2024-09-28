@@ -1,0 +1,35 @@
+- APP:
+    - Write user automation scripts (that performs the manual labor for the user)
+    - Work our LOCAL-AWS paths
+- REPO: rename to xgbutler-mlops
+- README
+    - Intro:
+        - Implement clickable table of contents
+    - Data:
+        - Describe lack of pre-processing because data is highly idiosyncratic
+        - Thus user data should be *pre-processed* before ingestion
+        - Works only with parquet files (web/local)
+        - For the moment only works with *binary target*
+    - PS:
+        - Describe how I lack inclination towards MLOPS if purpose is lacking
+- Unit Tests:
+    - app.ipynb
+    - train.ipynb
+    - mageai/poleng/utils/supports.py (?)
+
+# Create an app that automatically runs an mlops pipeline for an XGBoost study
+# UPDATE > not that of a good idea... app is too restrictive to be usable 
+# EX: param optimization, only xgboost, binary, classfication...
+# 
+
+# The app should have the following features:
+    - Experiment tracking and model registry (MLFLOW)
+    - Workflow orchestration (MAGEAI)
+    - Monitoring (EVIDENTLY, GRAFANA...)
+    - CI/CD 
+        - Unit Tests
+        - Integration Tests
+        - Code Formatter (LINTER, BLACK...)
+        - CLI Support (Makefile)
+        - Pre-commit hooks (GIT)
+    - Local & Cloud deployment

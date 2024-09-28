@@ -1,2 +1,2 @@
-mlflow ui --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root mlflow
+mlflow ui --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root $(pwd)/mlflow/mlruns/poleng
 mlflow server --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root $(pwd)/mlflow/mlruns/poleng

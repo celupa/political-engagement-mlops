@@ -115,9 +115,9 @@ def objective(
             clear_outdated_artifacts(artifact_paths)
 
             # log artifacts  
-            with open(f"{artifact_paths}/{preprocessor_name}_latest.bin", "wb") as fout:
+            with open(f"{artifact_paths}/{preprocessor_name}.bin", "wb") as fout:
                     pickle.dump(dv, fout)
-            booster.save_model(f"{artifact_paths}/{model_name}_latest.xgb")
+            booster.save_model(f"{artifact_paths}/{model_name}.xgb")
             mlflow.log_artifact(f"{artifact_paths}/{preprocessor_name}.bin")
             mlflow.log_artifact(f"{artifact_paths}/{model_name}.xgb")
             mlflow.set_tag("model", model_name)
