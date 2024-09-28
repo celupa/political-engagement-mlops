@@ -1,2 +1,9 @@
+# launch mlflow on localhost:5000
 mlflow ui --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root $(pwd)/mlflow/mlruns/poleng
 mlflow server --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root $(pwd)/mlflow/mlruns/poleng
+
+# test scenarios
+python -m scenarios.feed_clean_batches
+
+# reset project
+python -m scripts.reset_data

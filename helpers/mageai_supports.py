@@ -19,19 +19,19 @@ def load_preprocessor(preprocessor_path: str) -> DictVectorizer:
         dv = pickle.load(fin)
     return dv
 
-def load_artifacts(artifacts_path: str) -> Tuple[xgb.Booster, DictVectorizer]:
+def load_artifacts(artifacts_folder_path: str) -> Tuple[xgb.Booster, DictVectorizer]:
     """Load the latest xgb model and the related vectorizer."""
 
     data = {"xgb": load_model, "bin": load_preprocessor}
     loaded_artifacts = {}
 
-    for file in os.listdir(artifacts_path):
-        extension = file.split(".")[1]
-        file_path = f"{artifacts_path}/{file}"
-        if extension in data: 
+    for file in os.listdir(artifacts_folder_path):
+        if file.endswith("xgb") or file.endswith("bin"):
+            extension = file.split(".")[1]
+            file_path = f"{artifacts_folder_path}/{file}" 
             loaded_artifacts[extension] = data[extension](file_path)
 
-    model, dv = [v for v in loaded_artifacts.values()]
+    model, dv = loaded_artifacts["xgb"], loaded_artifacts["bin"]
     return model, dv 
 
 def get_dmatrix(df: pd.DataFrame, dv: DictVectorizer) -> pd.DataFrame:
@@ -44,14 +44,14 @@ def get_dmatrix(df: pd.DataFrame, dv: DictVectorizer) -> pd.DataFrame:
     return df_xgbdm
 
 def predict(
-        artifacts_path: str,
+        artifacts_folder_path: str,
         new_batches_folder_path: str,
         predictions_output_path: str
         ) -> pd.DataFrame:
     """Make predictions for new batches."""
 
     batch_dict = {}
-    model, dv = load_artifacts(artifacts_path)
+    model, dv = load_artifacts(artifacts_folder_path)
 
     for batch in os.listdir(new_batches_folder_path):
         # label data
