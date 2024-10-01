@@ -65,17 +65,19 @@ def predict(
         print("Predicting...")
         df_dmat = get_dmatrix(df, dv)
         # predict (0=subject doesn't need intervention (-), 1=subject could benefit from intervention (CONTACT))
-        df["prediction"] = np.round(model.predict(df_dmat)).astype(int)
-        df["prediction"] = df.prediction.replace([0, 1], ["-", "CONTACT"])
+        df["prediction"] = model.predict(df_dmat)
+        df["prediction_simplified"] = np.round(df.prediction).astype(int)
+        df["outcome"] = df.prediction_simplified.replace([0, 1], ["-", "CONTACT"])
         # make things easier for the agents by only keeping the target subjects
         # moreover, keep only essential contact info
-        df = df[df.prediction == "CONTACT"]
+        df = df[df.outcome == "CONTACT"]
         df = df[[
             "country", 
             "sex", 
             "education",
             "citizenship",
-            "subject_id"
+            "subject_id", 
+            "prediction"
             ]]
         # output predicted batch
         print(f"Writing predictions to: {predicted_batch_path}")

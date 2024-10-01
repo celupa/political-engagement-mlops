@@ -14,6 +14,7 @@ def generate_data(original_data_path: str="./data/original_data.parquet") -> Non
     # save data
     data_path = os.path.dirname(original_data_path)
     prod_data.to_parquet(f"{data_path}/training_data/starting_data/production_data.parquet")
+    prod_data.to_parquet(f"{data_path}/training_data/live_data.parquet")
     new_data.to_parquet(f"{data_path}/training_data/new_data/new_data.parquet")
 
 def generate_batches(

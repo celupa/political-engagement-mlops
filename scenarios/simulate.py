@@ -12,21 +12,20 @@ def predict_drift_batches(
         source_path: str= "./data/batch_data/testing_batches",
         dest_path: str="./data/batch_data/new_batches",
         ) -> None:
-    """Transfer drift testing_batches to new_batches."""
+    """Transfer all batches indiscriminatly to new_batches."""
 
     for batch in os.listdir(source_path):
         # target prod batches
-        if "new" in batch:
-            batch_source = f"{source_path}/{batch}"
-            batch_dest = f"{dest_path}/{batch}"
-            # copy batches from testing_batches to new_batches
-            shutil.copy(batch_source, batch_dest)
-            # predict
-            mageai_supports.predict(
-                ARTIFACTS_FOLDER_PATH,
-                NEW_BATCHES_PATH,
-                PREDS_PATH
-                )
+        batch_source = f"{source_path}/{batch}"
+        batch_dest = f"{dest_path}/{batch}"
+        # copy batches from testing_batches to new_batches
+        shutil.copy(batch_source, batch_dest)
+        # predict
+        mageai_supports.predict(
+            ARTIFACTS_FOLDER_PATH,
+            NEW_BATCHES_PATH,
+            PREDS_PATH
+            )
 
 
 if __name__ == "__main__":
