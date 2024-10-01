@@ -9,7 +9,7 @@ import xgboost as xgb
 
 from typing import Tuple
 
-from drift_detection import DriftHandler
+from helpers.drift_detection import DriftHandler
 
 
 class Loader():
@@ -78,7 +78,7 @@ class Predictor():
         ):
         self.artifacts_folder_path = artifacts_folder_path
         self.model, self.dv = Loader.load_artifacts(self.artifacts_folder_path)
-        self.new_batches_folder_path = new_batches_folder_path,
+        self.new_batches_folder_path = new_batches_folder_path
         self.predictions_output_path = predictions_output_path
         self.live_data = self.predict(Loader.load_live_data())
         
@@ -91,6 +91,8 @@ class Predictor():
         return df
     
     def predict_batches(self):
+        """Build on self.predict by outputing a more customized output."""
+
         for batch in os.listdir(self.new_batches_folder_path):
             # label data
             new_batch_path = f"{self.new_batches_folder_path}/{batch}"
@@ -102,8 +104,10 @@ class Predictor():
             batch_df = pd.read_parquet(new_batch_path)
             print("Predicting...")
             batch_df = self.predict(batch_df)
-            # detect drift
+            # handle drift
             drift_report = DriftHandler.detect_drift(self.live_data, batch_df)
+            if "drift":
+                pass 
             batch_df["prediction_simplified"] = np.round(batch_df.prediction).astype(int)
             batch_df["outcome"] = batch_df.prediction_simplified.replace([0, 1], ["-", "CONTACT"])
             # make things easier for the agents by only keeping the target subjects
@@ -122,11 +126,3 @@ class Predictor():
             end_user_df.to_parquet(predicted_batch_path, index=False)
             # remove new batch
             os.remove(new_batch_path)
-
-
-# ARTIFACTS_FOLDER_PATH = "./mlflow"
-# PREDS_PATH = "./data/batch_data/predictions"
-# NEW_BATCHES_PATH = "./data/batch_data/new_batches"
-
-# a = Predictor(ARTIFACTS_FOLDER_PATH,
-#               NEW_BATCHES_PATH,PREDS_PATH)

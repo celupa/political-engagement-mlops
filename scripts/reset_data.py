@@ -12,11 +12,10 @@ def reset_data(
     If hard reset, recreate datasets and batches.
     """
     
-    predictions_folder = os.listdir(predictions_folder)
-    pfolder_size = len(predictions_folder)
+    pfolder_size = len(os.listdir(predictions_folder))
 
     if pfolder_size > 0:
-        for file in predictions_folder:
+        for file in os.listdir(predictions_folder):
             file_path = f"{predictions_folder}/{file}"
             os.remove(file_path)
         print("Flushed predictions")
