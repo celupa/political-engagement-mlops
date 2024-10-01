@@ -1,6 +1,6 @@
 import os 
 import shutil
-from helpers import mageai_supports
+from helpers import load_transform_predict
 
 
 ARTIFACTS_FOLDER_PATH = "./mlflow"
@@ -23,7 +23,7 @@ def predict_prod_batches(
             # copy batches from testing_batches to new_batches
             shutil.copy(batch_source, batch_dest)
             # predict
-            mageai_supports.predict(
+            load_transform_predict.predict(
                 ARTIFACTS_FOLDER_PATH,
                 NEW_BATCHES_PATH,
                 PREDS_PATH
