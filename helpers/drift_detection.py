@@ -27,7 +27,7 @@ class DriftHandler():
     def detect_drift(self, live_data: pd.DataFrame, batch: pd.DataFrame):
         """Awesome description."""
         
-        print("Checking for data drift...")
+        print("---Checking for data drift...")
         # label columns
         cat_cols = [col for col in live_data.columns if live_data[col].dtype == "object"]
         num_cols = [col for col in live_data.columns if live_data[col].dtype != "object"]
@@ -48,7 +48,7 @@ class DriftHandler():
         
         self.report.run(
         reference_data=live_data, 
-        current_data=live_data[1], 
+        current_data=batch, 
         column_mapping=column_mapping
         )
         
@@ -92,20 +92,19 @@ class DriftHandler():
         return retrain_model
       
     def retrain_model(self):
-        print("Retraining model...")
+        print("---Retraining model...")
         prod_data = pd.read_parquet(self.prod_data_path)
         
         try:
             new_data = pd.read_parquet(self.new_data_path)
         except:
-            print("No new data found. Please contact the MLOPS team.")
-            sys.exit(1)
+            print("---No new data found. Please reach out the MLOPS team.")
             
         live_data = pd.concat([prod_data, new_data])
         live_data.to_parquet(self.live_data_path)
         os.remove(self.new_data_path)
-        print(f"New live data wrote to: {self.live_data_path}")
+        print(f"---New live data wrote to: {self.live_data_path}")
         
         os.system("python train.py")
         
-        print("Model retraining completed.")
+        print("---Model retraining completed.")

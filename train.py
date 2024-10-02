@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[4]:
-
-
 import sys
 import os
 import pickle
@@ -23,22 +17,15 @@ import mlflow
 from helpers import cfg, supports, load_transform_predict
 
 
-# In[2]:
-
-
 # initialize configuration
 # mode=test will minimize parameters (ex: 20 VS 1000 booster runs)
 # skip_optimization=True will skip model tuning
 CONFIG = cfg.init_config(mode="test", skip_optimization=False)
 
 # output config
-print("---CONFIG:")
+print("---MODEL TRAINING CONFIG:")
 for k, v in CONFIG.items():
-    print(f"---{k} > {v}")
-
-
-# In[3]:
-
+    print(f"-----{k} > {v}")
 
 # # launch mlflow
 # mlflow ui --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root mlflow
@@ -53,16 +40,8 @@ supports.set_mlflow_artifact_location(
     artifact_location
 )
 
-
-# In[4]:
-
-
 # read data
 data = load_transform_predict.Loader.load_live_data()
-
-
-# In[5]:
-
 
 # setup training context
 # get datasets
@@ -84,10 +63,6 @@ xtest = dv.transform(test_dict)
 # get dmatrix
 xtrain = xgb.DMatrix(xtrain, label=ytrain)
 xtest = xgb.DMatrix(xtest, label=ytest)
-
-
-# In[6]:
-
 
 # optimize
 if not CONFIG["skip_optimization"]:
@@ -116,10 +91,6 @@ if not CONFIG["skip_optimization"]:
         trials=Trials()
         )
 
-
-# In[7]:
-
-
 # save the model with the best params
 artifacts_path = "./mlflow"
 tags = {
@@ -145,10 +116,3 @@ supports.objective(
      save_artifacts=(True, artifacts_path, dv)
      )
     
-
-
-# In[ ]:
-
-
-
-

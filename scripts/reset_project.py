@@ -18,9 +18,9 @@ def reset_data(
         for file in os.listdir(predictions_folder):
             file_path = f"{predictions_folder}/{file}"
             os.remove(file_path)
-        print("Flushed predictions")
+        print("---Flushed predictions")
     else:
-        print("No predictions to delete")
+        print("---No predictions to delete")
 
     if len(argv) > 1:
         hard_reset = argv[1]
@@ -28,7 +28,7 @@ def reset_data(
     if hard_reset == "true":
         data_generation.generate_data()
         data_generation.generate_batches()
-        print("Recreated datasets")
+        print("---Recreated datasets")
 
 
 if __name__ == "__main__":

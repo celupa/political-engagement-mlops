@@ -39,7 +39,7 @@ class Loader():
             if file.endswith("xgb") or file.endswith("bin"):
                 extension = file.split(".")[1]
                 file_path = f"{artifacts_folder_path}/{file}" 
-                print(f"Loaded: {file_path}")
+                print(f"---Loaded: {file_path}")
                 loaded_artifacts[extension] = data[extension](file_path)
 
         model, dv = loaded_artifacts["xgb"], loaded_artifacts["bin"]
@@ -52,10 +52,10 @@ class Loader():
             ) -> pd.DataFrame:
         
         if not os.path.exists(live_data_path):
-            print("Live data not found. Creating data...")
+            print("---Live data not found. Creating data...")
             shutil.copy(backup_data_path, live_data_path)
 
-        print(f"Loaded: {live_data_path}")
+        print(f"---Loaded: {live_data_path}")
         df = pd.read_parquet(live_data_path)
         return df
 
@@ -109,19 +109,19 @@ class Predictor():
             output_batch_name = f"{batch_name}_predicted.parquet"
             predicted_batch_path = f"{self.predictions_output_path}/{output_batch_name}"
             # read data and wrangle data
-            print(f"Reading: {new_batch_path}")
+            print(f"---Reading: {new_batch_path}")
             batch_df = pd.read_parquet(new_batch_path)
             # handle drift
             drift_detected = drift_handler.detect_drift(
                 self.live_data, 
-                self.predict(batch_df.drop(column="subject_id"))
+                self.predict(batch_df.drop(columns="subject_id"))
                 )
             if drift_detected > 0:
                 # the artifacts and live data will be updated
                 drift_handler.retrain_model()
                 self.model, self.dv = Loader.load_artifacts(self.artifacts_folder_path)
                 self.live_data = self.predict(Loader.load_live_data())
-            print("Predicting...")
+            print("---Predicting...")
             batch_df = self.predict(batch_df)
             batch_df["prediction_simplified"] = np.round(batch_df.prediction).astype(int)
             batch_df["outcome"] = batch_df.prediction_simplified.replace([0, 1], ["-", "CONTACT"])
@@ -137,7 +137,7 @@ class Predictor():
                 "prediction"
                 ]]
             # output predicted batch
-            print(f"Writing predictions to: {predicted_batch_path}")
+            print(f"---Writing predictions to: {predicted_batch_path}")
             end_user_df.to_parquet(predicted_batch_path, index=False)
             # remove new batch
             os.remove(new_batch_path)
