@@ -1,7 +1,8 @@
 - APP:
     - Write user automation scripts (that performs the manual labor for the user)
     - Work our LOCAL-AWS paths
-    - Include data versioning (which batches were used in retraining the model)
+    - Include data versioning and annotations
+    - Format train.py
 - REPO: rename to xgbutler-mlops
 - README
     - Intro:

@@ -99,6 +99,8 @@ class Predictor():
     
     def predict_batches(self):
         """Build on self.predict by outputing a more customized output."""
+        
+        drift_handler = DriftHandler()
 
         for batch in os.listdir(self.new_batches_folder_path):
             # label data
@@ -109,15 +111,18 @@ class Predictor():
             # read data and wrangle data
             print(f"Reading: {new_batch_path}")
             batch_df = pd.read_parquet(new_batch_path)
+            # handle drift
+            drift_detected = drift_handler.detect_drift(
+                self.live_data, 
+                self.predict(batch_df.drop(column="subject_id"))
+                )
+            if drift_detected > 0:
+                # the artifacts and live data will be updated
+                drift_handler.retrain_model()
+                self.model, self.dv = Loader.load_artifacts(self.artifacts_folder_path)
+                self.live_data = self.predict(Loader.load_live_data())
             print("Predicting...")
             batch_df = self.predict(batch_df)
-            # handle drift
-            drift_report = DriftHandler.detect_drift(
-                self.live_data, 
-                batch_df.drop(column="subject_id")
-                )
-            if "drift":
-                pass 
             batch_df["prediction_simplified"] = np.round(batch_df.prediction).astype(int)
             batch_df["outcome"] = batch_df.prediction_simplified.replace([0, 1], ["-", "CONTACT"])
             # make things easier for the agents by only keeping the target subjects

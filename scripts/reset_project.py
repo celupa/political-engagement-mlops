@@ -9,7 +9,7 @@ def reset_data(
         ) -> None:
     """
     Clear predictions folder.
-    If hard reset, recreate datasets and batches.
+    If hard_reset, recreate datasets and batches.
     """
     
     pfolder_size = len(os.listdir(predictions_folder))

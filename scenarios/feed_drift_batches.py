@@ -1,11 +1,6 @@
 import os 
 import shutil
-from helpers import load_transform_predict
-
-
-ARTIFACTS_FOLDER_PATH = "./mlflow"
-NEW_BATCHES_PATH = "./data/batch_data/new_batches"
-PREDS_PATH = "./data/batch_data/predictions"
+from helpers import load_transform_predict, dossier
 
 
 def predict_drift_batches(
@@ -15,9 +10,9 @@ def predict_drift_batches(
     """Transfer new testing_batches to new_batches."""
 
     batch_logic = load_transform_predict.Predictor(
-        ARTIFACTS_FOLDER_PATH,
-        NEW_BATCHES_PATH,
-        PREDS_PATH
+        dossier.ARTIFACTS_FOLDER_PATH,
+        dossier.NEW_BATCHES_PATH,
+        dossier.PREDS_PATH
         )
     
     for batch in os.listdir(source_path):
