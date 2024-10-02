@@ -93,15 +93,15 @@ class DriftHandler():
       
     def retrain_model(self):
         print("---Retraining model...")
-        prod_data = pd.read_parquet(self.prod_data_path)
+        live_data = pd.read_parquet(self.live_data_path)
         
         try:
             new_data = pd.read_parquet(self.new_data_path)
         except:
             print("---No new data found. Please reach out the MLOPS team.")
             
-        live_data = pd.concat([prod_data, new_data])
-        live_data.to_parquet(self.live_data_path)
+        live_data = pd.concat([live_data, new_data])
+        live_data.to_parquet(self.live_data_path, index=False)
         os.remove(self.new_data_path)
         print(f"---New live data wrote to: {self.live_data_path}")
         
