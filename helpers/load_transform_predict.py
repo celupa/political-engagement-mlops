@@ -39,6 +39,7 @@ class Loader():
             if file.endswith("xgb") or file.endswith("bin"):
                 extension = file.split(".")[1]
                 file_path = f"{artifacts_folder_path}/{file}" 
+                print(f"Loaded: {file_path}")
                 loaded_artifacts[extension] = data[extension](file_path)
 
         model, dv = loaded_artifacts["xgb"], loaded_artifacts["bin"]
@@ -72,9 +73,9 @@ class Transformer():
 class Predictor():
     def __init__(
         self,
-        artifacts_folder_path: str,
-        new_batches_folder_path: str,
-        predictions_output_path: str
+        artifacts_folder_path: str="./mlflow",
+        new_batches_folder_path: str="./data/batch_data/new_batches",
+        predictions_output_path: str="./data/batch_data/predictions"
         ):
         self.artifacts_folder_path = artifacts_folder_path
         self.model, self.dv = Loader.load_artifacts(self.artifacts_folder_path)
@@ -83,10 +84,16 @@ class Predictor():
         self.live_data = self.predict(Loader.load_live_data())
         
     def predict(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Make predictions for new batches."""
-        
+        """Make predictions for new batches. Add a prediction column to the df."""
+
+        # drop dependent variable (aims training data, not batches)
+        vd = "political_engagement"
+        if vd in df.columns:
+            df.drop(columns=vd, inplace=True)
+
         df_dmat = Transformer.get_dmatrix(df, self.dv)
         # predict (0=subject doesn't need intervention (-), 1=subject could benefit from intervention (CONTACT))
+        # in other words, a higher prediction = politically disengaged subjets
         df["prediction"] = self.model.predict(df_dmat)
         return df
     
@@ -105,7 +112,10 @@ class Predictor():
             print("Predicting...")
             batch_df = self.predict(batch_df)
             # handle drift
-            drift_report = DriftHandler.detect_drift(self.live_data, batch_df)
+            drift_report = DriftHandler.detect_drift(
+                self.live_data, 
+                batch_df.drop(column="subject_id")
+                )
             if "drift":
                 pass 
             batch_df["prediction_simplified"] = np.round(batch_df.prediction).astype(int)

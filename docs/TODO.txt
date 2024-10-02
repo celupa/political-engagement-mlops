@@ -1,6 +1,7 @@
 - APP:
     - Write user automation scripts (that performs the manual labor for the user)
     - Work our LOCAL-AWS paths
+    - Include data versioning (which batches were used in retraining the model)
 - REPO: rename to xgbutler-mlops
 - README
     - Intro:
@@ -10,6 +11,8 @@
         - Thus user data should be *pre-processed* before ingestion
         - Works only with parquet files (web/local)
         - For the moment only works with *binary target*
+    - Predictions:
+        - Model retraining is done based on delayed ground truth (agents gather new labeled data on the field)
     - PS:
         - Describe how I lack inclination towards MLOPS if purpose is lacking
 - Unit Tests:

@@ -1,9 +1,10 @@
 # python==3.10.14
 scikit-learn==1.5.1
 pandas==2.2.2
-pyarrow==11.0.0 # UPDATE
+pyarrow==11.0.0 # UPDATE(?)
 # recommended to install mlflow with pip to get precompiled version (ui included)
 mlflow==2.12.2
 xgboost==2.1.0
 hyperopt==0.2.7 
-mage-ai==   # UPDATE
+mage-ai==0.9.74   # UPDATE(?)
+evidently==0.4.38
