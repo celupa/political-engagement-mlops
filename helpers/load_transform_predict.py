@@ -1,6 +1,7 @@
 import pickle
 import os
 import shutil
+from datetime import datetime
 
 import pandas as pd
 import numpy as np
@@ -13,6 +14,8 @@ from helpers.drift_detection import DriftHandler
 
 
 class Loader():
+    """Organizing class holding various loading methods."""
+
     @staticmethod
     def _load_model(model_path: str) -> xgb.Booster:
         model = xgb.Booster()
@@ -60,6 +63,8 @@ class Loader():
         return df
 
 class Transformer():
+    """Organizing class holding wrangling methods."""
+
     @staticmethod
     def get_dmatrix(df: pd.DataFrame, dv: DictVectorizer) -> pd.DataFrame:
         """Get the XGB DMatrix of a dataframe."""
@@ -67,10 +72,11 @@ class Transformer():
         df_dict = df.to_dict(orient="records")
         df_vect = dv.transform(df_dict)
         df_xgbdm = xgb.DMatrix(df_vect)
-        
         return df_xgbdm
 
 class Predictor():
+    """Main class involved in predictions."""
+
     def __init__(
         self,
         artifacts_folder_path: str="./mlflow",
@@ -97,47 +103,54 @@ class Predictor():
         df["prediction"] = self.model.predict(df_dmat)
         return df
     
-    def predict_batches(self):
-        """Build on self.predict by outputing a more customized output."""
+    def predict_batches(self) -> pd.DataFrame | str:
+        """
+        Build on self.predict by outputing a more customized output.
+        Return a warning if there are no batches to predict.
+        """
         
         drift_handler = DriftHandler()
-
-        for batch in os.listdir(self.new_batches_folder_path):
-            # label data
-            new_batch_path = f"{self.new_batches_folder_path}/{batch}"
-            batch_name = batch.split(".")[0]
-            output_batch_name = f"{batch_name}_predicted.parquet"
-            predicted_batch_path = f"{self.predictions_output_path}/{output_batch_name}"
-            # read data and wrangle data
-            print(f"---Reading: {new_batch_path}")
-            batch_df = pd.read_parquet(new_batch_path)
-            # handle drift
-            drift_detected = drift_handler.detect_drift(
-                self.live_data, 
-                self.predict(batch_df.drop(columns="subject_id"))
-                )
-            if drift_detected > 0:
-                # the artifacts and live data will be updated
-                drift_handler.retrain_model()
-                self.model, self.dv = Loader.load_artifacts(self.artifacts_folder_path)
-                self.live_data = self.predict(Loader.load_live_data())
-            print("---Predicting...")
-            batch_df = self.predict(batch_df)
-            batch_df["prediction_simplified"] = np.round(batch_df.prediction).astype(int)
-            batch_df["outcome"] = batch_df.prediction_simplified.replace([0, 1], ["-", "CONTACT"])
-            # make things easier for the agents by only keeping the target subjects
-            # moreover, keep only essential contact info
-            batch_df = batch_df[batch_df.outcome == "CONTACT"]
-            end_user_df = batch_df[[
-                "country", 
-                "sex", 
-                "education",
-                "citizenship",
-                "subject_id", 
-                "prediction"
-                ]]
-            # output predicted batch
-            print(f"---Writing predictions to: {predicted_batch_path}")
-            end_user_df.to_parquet(predicted_batch_path, index=False)
-            # remove new batch
-            os.remove(new_batch_path)
+        
+        if len(os.listdir(self.new_batches_folder_path)) > 0:
+            for batch in os.listdir(self.new_batches_folder_path):
+                # label data
+                new_batch_path = f"{self.new_batches_folder_path}/{batch}"
+                batch_name = batch.split(".")[0]
+                output_batch_name = f"{batch_name}_predicted.parquet"
+                predicted_batch_path = f"{self.predictions_output_path}/{output_batch_name}"
+                # read data and wrangle data
+                print(f"---Reading: {new_batch_path}")
+                batch_df = pd.read_parquet(new_batch_path)
+                # handle drift
+                drift_detected = drift_handler.detect_drift(
+                    self.live_data, 
+                    self.predict(batch_df.drop(columns="subject_id"))
+                    )
+                if drift_detected > 0:
+                    # the artifacts and live data will be updated
+                    drift_handler.retrain_model()
+                    self.model, self.dv = Loader.load_artifacts(self.artifacts_folder_path)
+                    self.live_data = self.predict(Loader.load_live_data())
+                print("---Predicting...")
+                batch_df = self.predict(batch_df)
+                batch_df["prediction_simplified"] = np.round(batch_df.prediction).astype(int)
+                batch_df["outcome"] = batch_df.prediction_simplified.replace([0, 1], ["-", "CONTACT"])
+                # make things easier for the agents by only keeping the target subjects
+                # moreover, keep only essential contact info
+                batch_df = batch_df[batch_df.outcome == "CONTACT"]
+                end_user_df = batch_df[[
+                    "country", 
+                    "sex", 
+                    "education",
+                    "citizenship",
+                    "subject_id", 
+                    "prediction"
+                    ]]
+                # output predicted batch
+                print(f"---Writing predictions to: {predicted_batch_path}")
+                end_user_df.to_parquet(predicted_batch_path, index=False)
+                # remove new batch
+                os.remove(new_batch_path)
+            return end_user_df.head(5)
+        else:
+            return f"---{datetime.now()} - no batch available for prediction"

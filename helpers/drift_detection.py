@@ -43,7 +43,7 @@ class DriftHandler():
 
         self.report = Report(metrics=[
         ColumnDriftMetric(column_name="prediction"),
-        DatasetDriftMetric(columns=all_cols, drift_share=0.1)
+        DatasetDriftMetric(columns=all_cols, drift_share=0.05)
         ])
         
         self.report.run(

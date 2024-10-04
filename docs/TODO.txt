@@ -37,3 +37,6 @@
         - CLI Support (Makefile)
         - Pre-commit hooks (GIT)
     - Local & Cloud deployment
+
+- MAGEAI:
+    - Create Global Data Product returning mlflow artifacts and live_data
