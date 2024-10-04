@@ -2,15 +2,13 @@ import pickle
 import os
 import shutil
 from datetime import datetime
-
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction import DictVectorizer
 import xgboost as xgb
-
 from typing import Tuple
-
 from helpers.drift_detection import DriftHandler
+from helpers import dossier
 
 
 class Loader():
@@ -50,8 +48,8 @@ class Loader():
     
     @staticmethod
     def load_live_data(
-            live_data_path: str="./data/training_data/live_data.parquet", 
-            backup_data_path: str="./data/training_data/starting_data/production_data.parquet"
+            live_data_path: str=dossier.LIVE_DATA_LOCATION, 
+            backup_data_path: str=dossier.PRODUCTION_DATA_LOCATION
             ) -> pd.DataFrame:
         
         if not os.path.exists(live_data_path):
@@ -79,9 +77,9 @@ class Predictor():
 
     def __init__(
         self,
-        artifacts_folder_path: str="./mlflow",
-        new_batches_folder_path: str="./data/batch_data/new_batches",
-        predictions_output_path: str="./data/batch_data/predictions"
+        artifacts_folder_path: str=dossier.ARTIFACTS_LOCATION,
+        new_batches_folder_path: str=dossier.NEW_BATCHES_LOCATION,
+        predictions_output_path: str=dossier.PREDICTIONS_LOCATION
         ):
         self.artifacts_folder_path = artifacts_folder_path
         self.model, self.dv = Loader.load_artifacts(self.artifacts_folder_path)
@@ -90,7 +88,7 @@ class Predictor():
         self.live_data = self.predict(Loader.load_live_data())
         
     def predict(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Make predictions for new batches. Add a prediction column to the df."""
+        """Make predictions for new batches. Add a "prediction" column to the df."""
 
         # drop dependent variable (aims training data, not batches)
         vd = "political_engagement"
@@ -98,19 +96,18 @@ class Predictor():
             df.drop(columns=vd, inplace=True)
 
         df_dmat = Transformer.get_dmatrix(df, self.dv)
-        # predict (0=subject doesn't need intervention (-), 1=subject could benefit from intervention (CONTACT))
-        # in other words, a higher prediction = politically disengaged subjets
         df["prediction"] = self.model.predict(df_dmat)
         return df
     
     def predict_batches(self) -> pd.DataFrame | str:
         """
-        Build on self.predict by outputing a more customized output.
+        Build on self.predict by returning a more customized output.
         Return a warning if there are no batches to predict.
         """
         
         drift_handler = DriftHandler()
         
+        # run predictions only if there are new batches
         if len(os.listdir(self.new_batches_folder_path)) > 0:
             for batch in os.listdir(self.new_batches_folder_path):
                 # label data
@@ -118,7 +115,7 @@ class Predictor():
                 batch_name = batch.split(".")[0]
                 output_batch_name = f"{batch_name}_predicted.parquet"
                 predicted_batch_path = f"{self.predictions_output_path}/{output_batch_name}"
-                # read data and wrangle data
+                # read and wrangle data
                 print(f"---Reading: {new_batch_path}")
                 batch_df = pd.read_parquet(new_batch_path)
                 # handle drift
@@ -132,6 +129,8 @@ class Predictor():
                     self.model, self.dv = Loader.load_artifacts(self.artifacts_folder_path)
                     self.live_data = self.predict(Loader.load_live_data())
                 print("---Predicting...")
+                # predict (0=subject doesn't need intervention (-), 1=subject could benefit from intervention (CONTACT))
+                # in other words, a higher prediction = politically disengaged subjets
                 batch_df = self.predict(batch_df)
                 batch_df["prediction_simplified"] = np.round(batch_df.prediction).astype(int)
                 batch_df["outcome"] = batch_df.prediction_simplified.replace([0, 1], ["-", "CONTACT"])

@@ -4,15 +4,15 @@ from helpers import load_transform_predict, dossier
 
 
 def simulate_batches(
-        source_path: str= "./data/batch_data/testing_batches",
-        dest_path: str="./data/batch_data/new_batches",
+        source_path: str=dossier.TEST_BATCHES_LOCATION,
+        dest_path: str=dossier.NEW_BATCHES_LOCATION,
         ) -> None:
-    """Transfer prod testing_batches to new_batches."""
+    """Transfer all batches to new_batches and predict them."""
 
     batch_logic = load_transform_predict.Predictor(
-        dossier.ARTIFACTS_FOLDER_PATH,
-        dossier.NEW_BATCHES_PATH,
-        dossier.PREDS_PATH
+        dossier.ARTIFACTS_LOCATION,
+        dossier.NEW_BATCHES_LOCATION,
+        dossier.PREDICTIONS_LOCATION
         )
     
     for batch in os.listdir(source_path):

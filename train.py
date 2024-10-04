@@ -1,20 +1,10 @@
-# import sys
-# import os
-# import pickle
-# from datetime import datetime 
-
-# import pandas as pd
-# import numpy as np
 from sklearn.model_selection import train_test_split 
 from sklearn.feature_extraction import DictVectorizer 
-# from sklearn.metrics import roc_auc_score, log_loss, root_mean_squared_error
 import xgboost as xgb
 from hyperopt import fmin, hp, tpe, Trials
 from hyperopt.pyll import scope
-
 import mlflow
-
-from helpers import cfg, supports, load_transform_predict
+from helpers import cfg, supports, load_transform_predict, dossier
 
 
 # initialize configuration
@@ -30,12 +20,12 @@ for k, v in CONFIG.items():
 # # launch mlflow
 # mlflow ui --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root mlflow
 experiment = "political_engagement"
-artifact_location = CONFIG["mlflow_artifacts_path"]
+artifact_location = dossier.MLFLOW_ARTIFACTS_LOCATION
 
-mlflow.set_tracking_uri("sqlite:///mlflow/mlflow.db")
+mlflow.set_tracking_uri(dossier.MLFLOW_TRACKING_URI)
 mlflow.set_experiment(experiment)
 supports.set_mlflow_artifact_location(
-    "./mlflow/mlflow.db",
+    dossier.MLFLOW_DB_LOCATION,
     experiment,
     artifact_location
 )
@@ -92,7 +82,7 @@ if not CONFIG["skip_optimization"]:
         )
 
 # save the model with the best params
-artifacts_path = "./mlflow"
+artifacts_path = dossier.ARTIFACTS_LOCATION
 tags = {
         "author": "andrei lupascu",
         "mode": CONFIG["mode"]

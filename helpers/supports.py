@@ -1,19 +1,14 @@
 import os
-
-import pandas as pd
-
-import xgboost as xgb
-from sklearn.metrics import roc_auc_score, log_loss, root_mean_squared_error
-from sklearn.feature_extraction import DictVectorizer
-
-from hyperopt import STATUS_OK
-
-import mlflow
-
 from datetime import datetime
 import pickle
 from typing import Any, Tuple
 import sqlite3
+import pandas as pd
+import xgboost as xgb
+from sklearn.metrics import roc_auc_score, log_loss, root_mean_squared_error
+from sklearn.feature_extraction import DictVectorizer
+from hyperopt import STATUS_OK
+import mlflow
 
 
 def get_objname(obj: Any) -> str:
@@ -62,7 +57,7 @@ def objective(
     Set-up the mlflow/hyperopt optimization process.
     
     params:
-        save_artifacts: bool, artifacts_path, DictVectorizer
+        save_artifacts: (bool, artifacts_path (usually: ./mlflow), DictVectorizer)
     """
 
     with mlflow.start_run():

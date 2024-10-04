@@ -7,6 +7,9 @@ mlflow server --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-
 
 # test scenarios
 python -m scenarios.feed_clean_batches
+python -m scenarios.feed_drift_batches
+python -m scenarios.simulate
 
 # reset project
-python -m scripts.reset_project
+python -m scripts.reset_project true
+python -m scripts.pulse_check

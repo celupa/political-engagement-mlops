@@ -1,10 +1,11 @@
 import os
 from sys import argv
+from helpers import dossier
 from scripts import data_generation
 
 
 def reset_data(
-        predictions_folder: str="./data/batch_data/predictions",
+        predictions_folder: str=dossier.PREDICTIONS_LOCATION,
         hard_reset: str="false"
         ) -> None:
     """
