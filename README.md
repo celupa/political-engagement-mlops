@@ -28,7 +28,7 @@ This data has been heavily transformed and customized in a previous project: htt
 ## Flow
 The initial study offered the data on wich the starting XGB model has been trained.
 However, since this is a continuous study, additional data keeps coming from the field in batch format.
-These batches are fed to the model for predictions. Between the batch and the model resides an *omnious overseer* assessing wether or not the new batch data has drifted (new values in the dataset, prediction drift...).
+These batches are fed to the model for predictions. Between the batch and the model resides the *omnious overseer* assessing wether or not the new batch data has drifted (new values in the dataset, prediction drift...).
 If there happens to be data drift, an automated correcting mechanism will look for new data, assimilate it to the original training data and retrain a fresh model. 
 Automated parameter tuning will make sure the best model is picked for the job. 
 <image=/>
