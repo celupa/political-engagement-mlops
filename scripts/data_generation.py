@@ -1,6 +1,5 @@
-import os
+import uuid
 import pandas as pd
-import uuid 
 from helpers import dossier
 
 
@@ -14,7 +13,7 @@ def generate_data(original_data_path: str=dossier.ORIGINAL_DATA_LOCATION) -> Non
 
     # read data
     original_data = pd.read_parquet(original_data_path)
-    # split data 
+    # split data
     prod_data = original_data[original_data.country.astype(int) < 500]
     new_data = original_data[original_data.country.astype(int) >= 500]
     # save data
@@ -28,7 +27,7 @@ def generate_batches(
         batches_path: str=dossier.TEST_BATCHES_LOCATION
         ) -> None:
     """Generate batches containing expected and drift data."""
-    
+
     # read data
     prod_data = pd.read_parquet(prod_data_path)
     new_data = pd.read_parquet(new_data_path)
@@ -50,6 +49,6 @@ def generate_batches(
             subset["subject_id"] = [str(uuid.uuid4()) for i in range(len(subset))]
             # updates slices
             lower_bound = upper_bound
-            upper_bound += upper_bound 
+            upper_bound += upper_bound
             # export batches
             subset.to_parquet(f"{batches_path}/{batch_name}", index=False)

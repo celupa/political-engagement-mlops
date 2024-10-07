@@ -93,7 +93,7 @@ best_result["seed"] = search_space["seed"]
 # format best results (some params need to be cast as int)
 int_params = ["max_depth"]
 for int_param in int_params:
-        best_result[int_param] = int(best_result[int_param])
+    best_result[int_param] = int(best_result[int_param])
 
 supports.objective(
      search_space=best_result,

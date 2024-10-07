@@ -1,9 +1,14 @@
-- APP:
-    - Write user automation scripts (that performs the manual labor for the user)
-    - Work our LOCAL-AWS paths
+- FEATURES:
+    - Code Formatter (LINTER, BLACK...)
+    - CLI Support (Makefile)
+    - Pre-commit hooks (GIT)
+    
+    - Re-work app to use custom user data (is this even feasible?)
+    - Implement cloud deployment (+ config files)
     - Include data versioning and annotations
-    - Format train.py
-- REPO: rename to xgbutler-mlops
+    - Create Global Data Product returning mlflow artifacts and live_data only once (mageai)
+- APP:
+    - Write Unit & Integration Test (substitued by pseudo-integration test pulse_check.py)
 - README
     - Intro:
         - Implement clickable table of contents
@@ -16,27 +21,3 @@
         - Model retraining is done based on delayed ground truth (agents gather new labeled data on the field)
     - PS:
         - Describe how I lack inclination towards MLOPS if purpose is lacking
-- Unit Tests:
-    - app.ipynb
-    - train.ipynb
-    - mageai/poleng/utils/supports.py (?)
-
-# Create an app that automatically runs an mlops pipeline for an XGBoost study
-# UPDATE > not that of a good idea... app is too restrictive to be usable 
-# EX: param optimization, only xgboost, binary, classfication...
-# 
-
-# The app should have the following features:
-    - Experiment tracking and model registry (MLFLOW)
-    - Workflow orchestration (MAGEAI)
-    - Monitoring (EVIDENTLY, GRAFANA...)
-    - CI/CD 
-        - Unit Tests
-        - Integration Tests
-        - Code Formatter (LINTER, BLACK...)
-        - CLI Support (Makefile)
-        - Pre-commit hooks (GIT)
-    - Local & Cloud deployment
-
-- MAGEAI:
-    - Create Global Data Product returning mlflow artifacts and live_data

@@ -5,7 +5,7 @@ from scripts import reset_project
 
 def check_app_pulse() -> None:
     """See if the app is still operational after heavy changes."""
-    
+
     try:
         simulate.simulate_batches()
         reset_project.reset_data(hard_reset="true")

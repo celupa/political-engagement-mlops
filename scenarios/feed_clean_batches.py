@@ -1,4 +1,4 @@
-import os 
+import os
 import shutil
 from helpers import load_transform_predict, dossier
 
@@ -14,7 +14,7 @@ def predict_prod_batches(
         dossier.NEW_BATCHES_LOCATION,
         dossier.PREDICTIONS_LOCATION
         )
-    
+
     for batch in os.listdir(source_path):
         # target prod batches
         if "prod" in batch:
