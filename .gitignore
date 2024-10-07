@@ -1,6 +1,6 @@
 # personal stuff
 mlruns/
-mlflow/mlruns/
+!mlflow/mlruns/poleng
 .ssh_tunnel
 metadata.yaml
 ~/

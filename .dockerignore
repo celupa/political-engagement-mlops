@@ -1,0 +1,8 @@
+# python components
+__pycache__/
+*.pyc
+
+# folders 
+mlruns/
+vip/
+.gitignore
