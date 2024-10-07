@@ -1,11 +1,11 @@
 services:
   mageai:
-    image: mageai/mageai:latest  
+    image: mageai/mageai:latest 
     container_name: mageai_service
     ports:
       - "6789:6789"
     volumes:
-      - ./app:/app  
+      - .:/app  
     command: ["mage", "start", "mageai/poleng", "--host", "0.0.0.0", "--port", "6789"]
     depends_on:
       - mlflow
@@ -21,17 +21,16 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./app:/app 
+      - .:/app 
     command: > 
       bash -c
-      "pip install -r /app/requirements.txt && 
+      "pip install --upgrade pip &&
+      pip install -r ./requirements.txt && 
       mlflow server --backend-store-uri sqlite:///mlflow/mlflow.db 
-      --default-artifact-root /app/mlflow/mlruns/poleng 
+      --default-artifact-root ./mlflow/mlruns/poleng 
       --host 0.0.0.0 --port 5000"
     networks:
       - user_network
-    environment:
-      - MLFLOW_TRACKING_URI=http://0.0.0.0:5000
 
 networks:
   user_network:
