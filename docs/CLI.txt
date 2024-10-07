@@ -1,7 +1,7 @@
-# mage-ai
+# start mage-ai (localhost:6789)
 mageai start mageai/poleng
 
-# launch mlflow on localhost:5000
+# launch mlflow on (localhost:5000)
 mlflow ui --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root $(pwd)/mlflow/mlruns/poleng
 mlflow server --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root $(pwd)/mlflow/mlruns/poleng
 
@@ -10,6 +10,8 @@ python -m scenarios.feed_clean_batches
 python -m scenarios.feed_drift_batches
 python -m scenarios.simulate
 
-# reset project
+# reset project (cleans predictions and recreates datasets)
 python -m scripts.reset_project true
+
+# check app still works after modifications
 python -m scripts.pulse_check
