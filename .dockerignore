@@ -1,9 +1,10 @@
 # python components
-__pycache__/
+__pycache__
 *.pyc
 
 # folders 
-docs/
-mlruns/
-vip/
+~
 .gitignore
+docs
+mlruns
+vip

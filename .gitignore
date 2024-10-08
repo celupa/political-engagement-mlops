@@ -4,7 +4,6 @@ mlruns/
 .ssh_tunnel
 metadata.yaml
 ~/
-mageai/
 vip/
 
 # Byte-compiled / optimized / DLL files

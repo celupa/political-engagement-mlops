@@ -1,37 +1,26 @@
 services:
   mageai:
-    image: mageai/mageai:latest 
-    container_name: mageai_service
+    build: .
+    image: poleng_mlops:latest
+    container_name: mageai
     ports:
-      - "6789:6789"
+      - "6789:6789" 
+    # environment:
+    #   - MAGE_PORT=6789
+    command: >
+      bash -c "mage start mageai/poleng --host 0.0.0.0 --port 6789"
     volumes:
       - .:/app  
-    command: ["mage", "start", "mageai/poleng", "--host", "0.0.0.0", "--port", "6789"]
-    depends_on:
-      - mlflow
-    environment:
-      - PYTHONUNBUFFERED=1
-      - PIP_NO_CACHE_DIR=1
-    networks:
-      - user_network
 
   mlflow:
-    image: python:3.10
-    container_name: mlflow_service
+    build: .
+    image: poleng_mlops:latest
+    container_name: mlflow
     ports:
-      - "5000:5000"
+      - "5000:5000"  
+    # environment:
+    #   - MLFLOW_TRACKING_URI=http://mlflow:5000
+    command: >
+      bash -c "mlflow server --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root ./mlflow/mlruns/poleng --host 0.0.0.0 --port 5000"
     volumes:
-      - .:/app 
-    command: > 
-      bash -c
-      "pip install --upgrade pip &&
-      pip install -r ./requirements.txt && 
-      mlflow server --backend-store-uri sqlite:///mlflow/mlflow.db 
-      --default-artifact-root ./mlflow/mlruns/poleng 
-      --host 0.0.0.0 --port 5000"
-    networks:
-      - user_network
-
-networks:
-  user_network:
-    driver: bridge
+      - .:/app  
