@@ -9,8 +9,8 @@ services:
     #   - MAGE_PORT=6789
     command: >
       bash -c "mage start mageai/poleng --host 0.0.0.0 --port 6789"
-    volumes:
-      - .:/app  
+    # volumes:
+    #   - .:/app  
 
   mlflow:
     build: .
@@ -22,5 +22,5 @@ services:
     #   - MLFLOW_TRACKING_URI=http://mlflow:5000
     command: >
       bash -c "mlflow server --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root ./mlflow/mlruns/poleng --host 0.0.0.0 --port 5000"
-    volumes:
-      - .:/app  
+    # volumes:
+    #   - .:/app  
