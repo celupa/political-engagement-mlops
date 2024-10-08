@@ -1,15 +1,13 @@
 # recommended to install packages with pip to get precompiled version of mlflow
+# also mage-ai and mlflow don't play nice together (flask is updated in Dockerfile)
 # python==3.10.14
 scikit-learn==1.5.1
 pandas==2.2.2
 pyarrow==14.0.1 
-flask==3.0.3
 mage-ai==0.9.74
-mlflow==2.12.2
 # mlflow==2.12.2
+mlflow==2.16.2
 xgboost==2.1.0
 hyperopt==0.2.7 
-# pyarrow
-# mage-ai==0.9.74
-evidently
 # evidently==0.4.38
+evidently==0.4.23

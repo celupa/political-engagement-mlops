@@ -1,5 +1,5 @@
 # start mage-ai (localhost:6789)
-mageai start mageai/poleng
+mage start mageai/poleng
 
 # launch mlflow on (localhost:5000)
 mlflow ui --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root $(pwd)/mlflow/mlruns/poleng
