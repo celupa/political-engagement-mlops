@@ -45,7 +45,9 @@ If **data drift** occurs, then an automated corrective mechanism will check for 
     * Click on **Pipelines**
     * Click on **Edit**
     * **Launch** the script
-<br/>
+
 ![Project Flow](./docs/images/pipelines.png)
+
 ![Project Flow](./docs/images/edit_pipeline.png)
+
 ![Project Flow](./docs/images/play_script.png)
