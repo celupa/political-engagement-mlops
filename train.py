@@ -1,5 +1,5 @@
-from sklearn.model_selection import train_test_split 
-from sklearn.feature_extraction import DictVectorizer 
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction import DictVectorizer
 import xgboost as xgb
 from hyperopt import fmin, hp, tpe, Trials
 from hyperopt.pyll import scope
@@ -17,8 +17,7 @@ print("---MODEL TRAINING CONFIG:")
 for k, v in CONFIG.items():
     print(f"-----{k} > {v}")
 
-# # launch mlflow
-# mlflow ui --backend-store-uri sqlite:///mlflow/mlflow.db --default-artifact-root mlflow
+# initialize mlflow API
 experiment = "political_engagement"
 artifact_location = dossier.MLFLOW_ARTIFACTS_LOCATION
 

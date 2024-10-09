@@ -2,7 +2,7 @@ services:
   mageai:
     build: .
     image: poleng_mlops:latest
-    container_name: mageai
+    container_name: poleng_services
     ports:
       - "6789:6789" 
     # environment:
@@ -15,7 +15,7 @@ services:
   mlflow:
     build: .
     image: poleng_mlops:latest
-    container_name: mlflow
+    container_name: poleng_services
     ports:
       - "5000:5000"  
     # environment:

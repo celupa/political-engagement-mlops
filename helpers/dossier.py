@@ -12,7 +12,7 @@ NEW_BATCHES_LOCATION = "./data/batch_data/new_batches"
 PREDICTIONS_LOCATION = "./data/batch_data/predictions"
 # artifact location
 ARTIFACTS_LOCATION = "./mlflow"
-# we use os because the database hardcodes the hostname 
+# we use os because the database hardcodes the hostname
 MLFLOW_ARTIFACTS_LOCATION = f"{os.getcwd()}/mlflow/mlruns/poleng"
 MLFLOW_TRACKING_URI = "sqlite:///mlflow/mlflow.db"
 MLFLOW_DB_LOCATION = "./mlflow/mlflow.db"
