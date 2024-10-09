@@ -9,5 +9,7 @@ mlruns
 vip
 
 # files
+.git
+.gitignore
 Dockerfile
 README.md
