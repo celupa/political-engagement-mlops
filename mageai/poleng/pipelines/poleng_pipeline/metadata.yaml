@@ -1,0 +1,44 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: grey
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: predict_batch
+  retry_config: null
+  status: updated
+  timeout: null
+  type: custom
+  upstream_blocks: []
+  uuid: predict_batch
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-09-25 07:31:06.913422+00:00'
+data_integration: null
+description: Parses new batch location every minute. If it finds a new fresh batch
+  of data, it will use the latest model to make predictions.
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: poleng_pipeline
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags:
+- schedule
+- xgb
+- poleng
+type: python
+uuid: poleng_pipeline
+variables_dir: /home/adi/.mage_data/poleng
+widgets: []

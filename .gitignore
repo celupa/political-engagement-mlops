@@ -3,7 +3,6 @@ vip/
 mlruns/
 !mlflow/mlruns/poleng
 .ssh_tunnel
-metadata.yaml
 ~/
 
 # Byte-compiled / optimized / DLL files

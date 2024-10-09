@@ -1,0 +1,41 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: grey
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: reset_project
+  retry_config: null
+  status: updated
+  timeout: null
+  type: custom
+  upstream_blocks: []
+  uuid: reset_project
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-10-04 08:42:54.633391+00:00'
+data_integration: null
+description: Running this pipeline will delete predictions from data/batch_data/predictions
+  and re-create demo datasets.
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: reset_project
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: reset_project
+variables_dir: /home/adi/.mage_data/poleng
+widgets: []

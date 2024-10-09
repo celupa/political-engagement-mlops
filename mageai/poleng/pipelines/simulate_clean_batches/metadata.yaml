@@ -1,0 +1,42 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: grey
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: feed_clean_batches
+  retry_config: null
+  status: updated
+  timeout: null
+  type: custom
+  upstream_blocks: []
+  uuid: feed_clean_batches
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2024-10-04 08:31:36.282133+00:00'
+data_integration: null
+description: Feeds batches with expected data to the model. This will out the predictions
+  to data/batch_data/predictions.
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: simulate_clean_batches
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags:
+- clean_data
+type: python
+uuid: simulate_clean_batches
+variables_dir: /home/adi/.mage_data/poleng
+widgets: []
