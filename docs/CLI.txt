@@ -15,3 +15,9 @@ python -m scripts.reset_project true
 
 # check app still works after modifications
 python -m scripts.pulse_check
+
+# build docker image 
+docker build -t poleng_mlops:latest
+
+# run docker container
+docker run -p 5000:5000 -p 6789:6789 poleng_mlops:latest
