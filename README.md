@@ -54,4 +54,4 @@ If **data drift** occurs, then an automated corrective mechanism will check for 
 
     ![Launch Script](./docs/images/play_script.png)
 
-*NOTE: the app is by default in "test" mode, meaning that the parameters for the training and tuning phase have drastically been reduced for speed purposes. To modify this, swith the "mode" in train.py's config to "prod".*
+*NOTE: the app is by default in "test" mode, meaning that the parameters for the training and tuning phase have drastically been reduced for speed purposes. To modify this, switch the "mode" in train.py's config to "prod".*
