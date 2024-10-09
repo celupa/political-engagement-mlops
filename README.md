@@ -1,38 +1,46 @@
-# Political Engagement (MLOPS Simulation)
-This project simulates a real-world application where a model predicts the political engagement of individuals.
-Data comes in batches from the field, predictions are appended to it and sent to the contact centers in an expected format. The focus here is on Machine Learning Operations.
+# Political Engagement MLOPS
+This project simulates an MLOPS pipeline handling the prediction of political engagement levels (training, tuning, model registry, orchestration, monitoring).
+Data comes in batches from the field, predictions are appended to it and sent to the contact centers in a usable format. 
 <br/>
 
-## TLDR;
-* Duplicate Repo 
-* Build Docker-Compose image with: **docker-compose build**
-* Launch container with **docker up**
-* Explore scenarios on **localhost:6789** (path_to_scenarios)
-* Observe effects in model registry **localhost:5000**
+## TL;DR
+* Duplicate repo: **https://github.com/celupa/political-engagement-mlops**
+* Build Docker image: **docker build -t poleng_mlops:latest .** (at the project level)
+* Start app: **docker run --rm --name poleng -p 5000:5000 -p 6789:6789 poleng_mlops:latest**
+* Browse scenarios: **localhost:6789** (Overview > Pipelines)
+* Check changes in registry: **localhost:5000**
 <br/>
 
 ## Context
-XGButler is - ficticious - organization gathering data on the general population.
-Some of the variables they are looking into are the education and income levels, public beliefs, political engagement...
-They trained an **XGBoost** model to predict the political engagement of their subjects based on the prior features.
-Their aim is to identify **politically disengaged** people and attempte to re-engage them.
-Why? They believe that a nation composed of politically engaged and educated individuals fares better in the longterm.
-How? The pilosophy of this organization is on the... debatable side of things. The batches originate from both reputable and less reputable sources. The organization leans on "the end justifies the means" approach.
+XGButler is a - fictitious - organization gathering data on the general population.
+The organization attempts to assess the political engagement levels of individuals based on variables such as education, income, beliefs... 
+Their current production model has been trained with **XGBoost**.
+The group aims to identify **politically disengaged** people with the aim of re-engaging them.
+The reason? The institution believes that a nation composed of politically engaged and educated individuals fares better in the long-term.
 <br/>
 
 ## Data 
 The original data comes from https://www.worldvaluessurvey.org/WVSDocumentationWV7.jsp.
-This data has been heavily transformed and customized in a previous project: https://github.com/celupa/political-engagement-analysis
+This data has been **heavily transformed** and customized in a previous project. Optional details can be found here: https://github.com/celupa/political-engagement-analysis
 <br/>
 
 ## Flow
-The initial study offered the data on wich the starting XGB model has been trained.
-However, since this is a continuous study, additional data keeps coming from the field in batch format.
-These batches are fed to the model for predictions. Between the batch and the model resides the *omnious overseer* assessing wether or not the new batch data has drifted (new values in the dataset, prediction drift...).
-If there happens to be data drift, an automated correcting mechanism will look for new data, assimilate it to the original training data and retrain a fresh model. 
-Automated parameter tuning will make sure the best model is picked for the job. 
+An initial field study has allowed XGButler to build and train their first production model.
+Engaging and educating people politically is tough work. Moreover, societal values are constantly mutating. Therefore, data MUST keep coming to continually correct the evaluation of political levels. 
+
+The data originates in 2 formats:
+* **Batches** are a quick way of predicting the political profile of someone and intervene accordingly. This type of data can flow from more or less reputable sources (e.g., government initiatives VS social media)
+* **Retrain data** is a continuous academic effort to track changes within a group (economical, political, precepts...). Continuous field studies are the main provider.
+
+Batches are fed to the current model for predictions. Between the batch and the model resides the *ominous overseer*, assessing whether or not the new batch data has drifted (new values in the dataset, prediction drift...).
+If **data drift** occurs, then an automated corrective mechanism will check for new field data, assimilate it to the original training data and upgrade the existing model. 
+
 ![Project Flow](./docs/poleng_flow.png)
 <br/>
 
 ## How to 
-To use the project, start by duplicating the github repo: https://github.com/celupa/political-engagement-mlops
+* For a quick start, check the above TL;DR section
+* All the project's features can be leveraged without containerizing or starting the app's services; **linux only**. First, duplicate the repo then see **scenarios** in **docs/CLI.txt**
+* If the app has been dockerized and started as per the TL;DR instructions:
+    * Click on **Pipelines**
+
