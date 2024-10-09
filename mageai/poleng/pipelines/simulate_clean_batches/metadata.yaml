@@ -35,7 +35,7 @@ settings:
   triggers: null
 spark_config: {}
 tags:
-- clean_data
+- scenario
 type: python
 uuid: simulate_clean_batches
 variables_dir: /home/adi/.mage_data/poleng

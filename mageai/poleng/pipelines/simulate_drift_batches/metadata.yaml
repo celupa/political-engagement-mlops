@@ -36,7 +36,7 @@ settings:
   triggers: null
 spark_config: {}
 tags:
-- drift_data
+- scenario
 type: python
 uuid: simulate_drift_batches
 variables_dir: /home/adi/.mage_data/poleng

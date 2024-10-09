@@ -42,7 +42,7 @@ If **data drift** occurs, then an automated corrective mechanism will check for 
 - For a quick start, check the TL;DR section
 - All the project's features can be leveraged without containerizing or starting the app's services (linux only). First, duplicate the repo, then check **test scenarios** in **docs/CLI.txt**
 - If the app has been dockerized and started as per the TL;DR instructions:
-1. Click on **Pipelines**
+1. Click on **Pipelines** and select one with the *scenario* tag
 
     ![Clikc Pipelines](./docs/images/pipelines.png)
 

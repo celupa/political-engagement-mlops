@@ -34,7 +34,8 @@ run_pipeline_in_one_process: false
 settings:
   triggers: null
 spark_config: {}
-tags: []
+tags:
+- scenario
 type: python
 uuid: full_simulation
 variables_dir: /home/adi/.mage_data/poleng
