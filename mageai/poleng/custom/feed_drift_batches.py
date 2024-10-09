@@ -7,11 +7,5 @@ from scenarios.feed_drift_batches import predict_drift_batches
 
 @custom
 def transform_custom(*args, **kwargs):
-    """
-    args: The output from any upstream parent blocks (if applicable)
-
-    Returns:
-        Anything (e.g. data frame, dictionary, array, int, str, etc.)
-    """
-
     predict_drift_batches()
+

@@ -9,14 +9,6 @@ from helpers import load_transform_predict, dossier
 
 @custom
 def predict(*args, **kwargs):
-    """
-    args: The output from any upstream parent blocks (if applicable)
-
-    Returns:
-        Anything (e.g. data frame, dictionary, array, int, str, etc.)
-    """
-    # Specify your custom logic here
-
     batch_logic = load_transform_predict.Predictor(
         dossier.ARTIFACTS_FOLDER_PATH,
         dossier.NEW_BATCHES_PATH,
@@ -29,7 +21,5 @@ def predict(*args, **kwargs):
 
 @test
 def test_output(output, *args) -> None:
-    """
-    Template code for testing the output of the block.
-    """
-    assert output is not None, 'The output is undefined'
+    assert output is not None,
+

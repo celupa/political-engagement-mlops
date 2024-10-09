@@ -7,12 +7,5 @@ from scenarios.feed_clean_batches import predict_prod_batches
 
 @custom
 def transform_custom(*args, **kwargs):
-    """
-    args: The output from any upstream parent blocks (if applicable)
-
-    Returns:
-        Anything (e.g. data frame, dictionary, array, int, str, etc.)
-    """
-    # Specify your custom logic here
-
     predict_prod_batches()
+

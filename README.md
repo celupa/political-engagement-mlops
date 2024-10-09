@@ -35,12 +35,16 @@ The data originates in 2 formats:
 Batches are fed to the current model for predictions. Between the batch and the model resides the *ominous overseer*, assessing whether or not the new batch data has drifted (new values in the dataset, prediction drift...).
 If **data drift** occurs, then an automated corrective mechanism will check for new field data, assimilate it to the original training data and upgrade the existing model. 
 
-![Project Flow](./docs/poleng_flow.png)
+![Project Flow](./docs/images/poleng_flow.png)
 <br/>
 
 ## How to 
 * For a quick start, check the TL;DR section
 * All the project's features can be leveraged without containerizing or starting the app's services (linux only). First, duplicate the repo then see **test scenarios** in **docs/CLI.txt**
 * If the app has been dockerized and started as per the TL;DR instructions:
-    * Click on **Pipelines**
-
+    * Click on **Pipelines** 
+![Project Flow](./docs/images/pipelines.png)
+    * Click on **Edit**
+![Project Flow](./docs/images/edit_pipeline.png)
+    * **Launch the script**
+![Project Flow](./docs/images/play_script.png)

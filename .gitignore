@@ -1,10 +1,10 @@
 # personal stuff
+vip/
 mlruns/
 !mlflow/mlruns/poleng
 .ssh_tunnel
 metadata.yaml
 ~/
-vip/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
