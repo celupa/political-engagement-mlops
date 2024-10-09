@@ -53,3 +53,5 @@ If **data drift** occurs, then an automated corrective mechanism will check for 
 3. **Launch** the script
 
     ![Launch Script](./docs/images/play_script.png)
+
+*NOTE: the app is in test mode, meaning that the parameters for training and tuning phase have drastically been reduced for speed. To modify this, swith the mode in train.py to "prod".*
