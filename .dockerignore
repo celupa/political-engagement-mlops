@@ -11,5 +11,7 @@ vip
 # files
 .git
 .gitignore
+.gitkeep
+.dockerignore
 Dockerfile
 README.md
