@@ -1,23 +1,9 @@
-- FEATURES:
-    - Code Formatter (LINTER, BLACK...)
-    - CLI Support (Makefile)
-    - Pre-commit hooks (GIT)
-    
-    - Re-work app to use custom user data (is this even feasible?)
-    - Implement cloud deployment (+ config files)
+- FEATURES:    
+    - Re-work app to use custom user data (is this even wise/feasible?)
+    - Implement cloud deployment (+ user config files)
     - Include data versioning and annotations
     - Create Global Data Product returning mlflow artifacts and live_data only once (mageai)
+    - Automate linters 
+    - Include Pre-commit hooks 
 - APP:
     - Write Unit & Integration Test (substitued by pseudo-integration test pulse_check.py)
-- README
-    - Intro:
-        - Implement clickable table of contents
-    - Data:
-        - Describe lack of pre-processing because data is highly idiosyncratic
-        - Thus user data should be *pre-processed* before ingestion
-        - Works only with parquet files (web/local)
-        - For the moment only works with *binary target*
-    - Predictions:
-        - Model retraining is done based on delayed ground truth (agents gather new labeled data on the field)
-    - PS:
-        - Describe how I lack inclination towards MLOPS if purpose is lacking
