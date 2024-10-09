@@ -1,5 +1,5 @@
 # Political Engagement MLOPS
-This project simulates an MLOPS pipeline handling the prediction of political engagement levels (training, tuning, model registry, orchestration, monitoring).
+This project simulates an MLOPS pipeline handling predictions for political engagement levels (training, tuning, model registry, orchestration, monitoring).
 Data comes in batches from the field, predictions are appended to it and sent to the contact centers in a usable format. 
 <br/>
 
@@ -7,8 +7,8 @@ Data comes in batches from the field, predictions are appended to it and sent to
 * Duplicate repo: **https://github.com/celupa/political-engagement-mlops**
 * Build Docker image (at the project level): **docker build -t poleng_mlops:latest .** 
 * Start app: **docker run --rm --name poleng -p 5000:5000 -p 6789:6789 poleng_mlops:latest**
-* Browse scenarios with MAGE-AI (Overview > Pipelines): **localhost:6789** 
-* Check changes in MLFLOW registry: **localhost:5000**
+* Browse scenarios with *mage-ai* (Overview > Pipelines): **localhost:6789** 
+* Check changes in *mlflow* registry: **localhost:5000**
 <br/>
 
 ## Context
@@ -40,11 +40,14 @@ If **data drift** occurs, then an automated corrective mechanism will check for 
 
 ## How to 
 * For a quick start, check the TL;DR section
-* All the project's features can be leveraged without containerizing or starting the app's services (linux only). First, duplicate the repo then see **test scenarios** in **docs/CLI.txt**
+* All the project's features can be leveraged without containerizing or starting the app's services (linux only). First, duplicate the repo, then check **test scenarios** in **docs/CLI.txt**
 * If the app has been dockerized and started as per the TL;DR instructions:
-    * Click on **Pipelines** 
+    * Click on **Pipelines**
+<br/>
 ![Project Flow](./docs/images/pipelines.png)
     * Click on **Edit**
+<br/>
 ![Project Flow](./docs/images/edit_pipeline.png)
-    * **Launch the script**
+    * **Launch** the script
+<br/>
 ![Project Flow](./docs/images/play_script.png)
