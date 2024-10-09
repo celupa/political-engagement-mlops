@@ -6,4 +6,9 @@ __pycache__
 ~
 docs
 mlruns
+pipelines
 vip
+
+# files
+Dockerfile
+README.md
