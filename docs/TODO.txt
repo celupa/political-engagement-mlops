@@ -3,6 +3,8 @@
     - Implement cloud deployment (+ user config files)
     - Include data versioning and annotations
     - Create Global Data Product returning mlflow artifacts and live_data only once (mageai)
+    - Include customized contact if something goes belly up?
+    - Include monitoring dashboard?
     - Automate linters 
     - Include Pre-commit hooks 
 - APP:
