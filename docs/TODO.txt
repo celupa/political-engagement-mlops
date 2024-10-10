@@ -7,3 +7,7 @@
     - Include Pre-commit hooks 
 - APP:
     - Write Unit & Integration Test (substitued by pseudo-integration test pulse_check.py)
+- README:
+    - Further describe technologies involved
+    - Further describe MO
+    - Share a few of my own thoughts on the project?
